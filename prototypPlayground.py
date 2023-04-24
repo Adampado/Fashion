@@ -52,6 +52,7 @@ create_table_query = '''CREATE TABLE IF NOT EXISTS sample
                       Description TEXT,
                       data BLOB, 
                       )'''
+                    
 cursor.execute(create_table_query)
 # --------------------------------------------------------
 
