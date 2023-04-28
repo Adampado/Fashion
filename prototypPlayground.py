@@ -52,15 +52,15 @@ create_table_query = '''CREATE TABLE IF NOT EXISTS sample
                       Description TEXT,
                       data BLOB, 
                       )'''
-                    
 cursor.execute(create_table_query)
+
 # --------------------------------------------------------
 
 insert_query = "INSERT INTO sample ('Image File Name', 'Outfit Type', Color, Brand, Price, 'Description', data) VALUES (?,?,?,?,?,?,?)"
  
 # get_image_sql = "SELECT data FROM sample WHERE Id = ?"
 
-cursor.execute(insert_query, ('asos_design.jpeg','Casual', 'Marine blue', 'Asos', 45, 'Striped shirt', sqlite3.Binary(image_binary[0]),))
+cursor.execute(insert_query, ('asos_design.jpeg','Casual', 'Marine blue', '', 45, 'Striped shirt', sqlite3.Binary(image_binary[0]),))
 cursor.execute(insert_query, ('athletic_tshirt.jpeg', 'Athletic', 'Blue', 'Nike', 29.99, 'Dri-FIT, short sleeve', sqlite3.Binary(image_binary[1]),))
 cursor.execute(insert_query, ('formal_black_suit.jpg', 'Formal', 'Black',  'Hugo', 299.99, 'Slim fit, two-piece',sqlite3.Binary(image_binary[2]),))
 # cursor.execute(insert_query, ('casual_red_dress.jpg', 'Casual',	'Red', 'Zara', 49.99, 'A-line, floral',))
