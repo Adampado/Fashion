@@ -1,14 +1,15 @@
 """
 Adam Njikam
 """
-import urllib.request
 import os
+import urllib.request
 import sqlite3
-from PIL import Image
-from io import BytesIO
 from PIL.ExifTags import TAGS
 from typing import List
 import webbrowser as wb
+# from PIL import Image
+# from io import BytesIO
+
 
 # Location of the images
 default_path = "Image"
@@ -18,8 +19,14 @@ image_binary = []
 search_rslt = []
 # image_binary = bytearray(3)
 
-# Get all images from given path and their names and BLOB
+
 def image_to_binary(dir=default_path):
+    """
+    Get all images from given path and their names and BLOB
+     
+    Parameter:
+    dir: Path to images. Default path is workspace
+    """
     
     # Get all names of images in the dir 
     if os.path.exists(dir): 
@@ -34,8 +41,14 @@ def image_to_binary(dir=default_path):
             image_binary.append(bytearray(f.read()))
             index += 1
 
-# download image from url and convert into a binary object
 def image_frm_url(url):
+    """
+    Downloads image(s) from url and convert into binary object (BLOB)
+
+    Parameter:
+    url: url
+
+    """
     image_url = url
     
     # download the image from the URL and save it to a file
@@ -46,8 +59,15 @@ def image_frm_url(url):
     return image_bin_data
 
 
-# Function adds the image url to the image description
 def save_img_url(img, url):
+    """
+    Adds the image url to the image description
+    
+    Parameters:
+    img : TYPE DESCRIPTION.
+    url (string) : image url
+
+    """
     # get the metadata of the image
     exifdata = img.getexif()
 
@@ -69,14 +89,20 @@ def print_List_len(size: List[int]):
     print(list_len)
     
 def searchDB(colr=""):
-        
+    """
+    Gets rows from database and test-opens image url
+    
+    Parameters:
+    colr (string): color given in by the App user.  The default is "".
+    
+    """
     # connect to the SQLite3 database
     conn = sqlite3.connect('fashionPrototyp.db')
     cursor = conn.cursor()
     
     # define the name of the table and columns in the database where the image is stored
     table_name = "sample"
-    image_column_name = "Data"
+    # image_column_name = "Data"
     
     if not not colr:
         colour = colr
@@ -91,7 +117,21 @@ def searchDB(colr=""):
            url_str = str(url).replace('(',  '').replace(')', '').replace(',', '').replace("'", '')
            print( url_str, '\n')
            wb.open_new_tab(url_str)
-            
+           
+         # Using a dictionary
+         # for row in rows:
+         #     search_rslt.append({
+         #         'id': row[0],
+         #         'OutfitType': row[1],
+         #         'Colour': row[2],
+         #         'Brand': row[3],
+         #         'Price': row[4],
+         #         'Description': row[5],
+         #         'Data': row[6],
+         #         'Url': row[7]
+         #     })
+         
+        # using a list of list
         # convert each tuple in the list to a list
         # for row in rows:
         #     search_rslt.append({
@@ -101,20 +141,6 @@ def searchDB(colr=""):
         # wb.open_new_tab(search_rslt['Url'])
         
         # search_rslt = [list[row] for row in rows]
-        
-        # Using a dictionary
-        # for row in rows:
-        #     search_rslt.append({
-        #         'id': row[0],
-        #         'OutfitType': row[1],
-        #         'Colour': row[2],
-        #         'Brand': row[3],
-        #         'Price': row[4],
-        #         'Description': row[5],
-        #         'Data': row[6],
-        #         'Url': row[7]
-        #     })
-        
         
         # for row in rows:
         #     row_id = row[0]
@@ -128,8 +154,6 @@ def searchDB(colr=""):
             
         #     # show the image using Pillow's built-in image viewer
         #     img.show()
-
-        
 
         # close the database connection
         cursor.close()
