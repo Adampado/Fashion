@@ -4,22 +4,24 @@
 """
 import sqlite3
 
-# Create database
-conn = sqlite3.connect('fashionPrototyp.db')
-# Create a cursor object to execute SQL statements
-cursor = conn.cursor()
-# Create a table with some columns
-create_table_query = '''CREATE TABLE IF NOT EXISTS sample 
+def create_DB():
+    
+    # Create database
+    conn = sqlite3.connect('fashionPrototyp.db')
+    # Create a cursor object to execute SQL statements
+    cursor = conn.cursor()
+    # Create a table with some columns
+    create_table_query = '''CREATE TABLE IF NOT EXISTS sample 
                     (id INTEGER PRIMARY KEY,
-                     "Image File Name" TEXT, 
-                     "Outfit Type" TEXT,
+                     "ImageFileName" TEXT, 
+                     "OutfitType" TEXT,
                      Colour TEXT,
                      Brand TEXT,
                      Price INTEGER,
                      Description TEXT,
                      Data BLOB NOT NULL, 
                      "Url" TEXT)'''
-cursor.execute(create_table_query)
+    cursor.execute(create_table_query)
 
 # Placehlolders in python ?
 # insert_query = "INSERT INTO sample ('Image File Name', 'Outfit Type', Color, Brand, Price, Description, data) VALUES (?,?,?,?,?,?,?)"
@@ -40,11 +42,11 @@ cursor.execute(create_table_query)
     # f.write(img_data)
 # --------------------------------------------------------
   
-# Commit changes and close the connection
-cursor.close()
+    # Commit changes and close the connection
+    cursor.close()
 
-# conn.commit()
-conn.close()
+    # conn.commit()
+    conn.close()
 
 '''
 # path = 'C:/Program Files/SQLiteStudio/fashion.db'
