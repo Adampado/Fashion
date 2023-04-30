@@ -7,12 +7,15 @@ import sqlite3
 from PIL import Image
 from io import BytesIO
 from PIL.ExifTags import TAGS
+from typing import List
+import webbrowser as wb
 
 # Location of the images
 default_path = "Image"
 
 images = []
 image_binary = []
+search_rslt = []
 # image_binary = bytearray(3)
 
 # Get all images from given path and their names and BLOB
@@ -61,6 +64,10 @@ def save_img_url(img, url):
     exifdata[TAGS["ImageDescription"]] = description
            
     
+def print_List_len(size: List[int]):
+    list_len = len(size)
+    print(list_len)
+    
 def searchDB(colr=""):
         
     # connect to the SQLite3 database
@@ -73,22 +80,54 @@ def searchDB(colr=""):
     
     if not not colr:
         colour = colr
+        
         # retrieve the image binary data from the database table
-        cursor.execute("SELECT {}, {} FROM {} WHERE {} = ?".format(image_column_name, 'Url',  table_name, 'colour'), (colour,))
-        rows = cursor.fetchall()
+        # cursor.execute("SELECT {}, {} FROM {} WHERE {} = ?".format(image_column_name, 'Url',  table_name, 'Colour'), (colour,))
+        cursor.execute("SELECT {} FROM {} WHERE {} = ?".format('Url',  table_name, 'Colour'), (colour,))
 
-        for row in rows:
-            row_id = row[0]
-            row_image = row[1]
-            row_url = row[2]
-            img = Image.open(BytesIO(row_image))
-            save_img_url(img, row_url)
+        rows = cursor.fetchall()
+        
+        for url in rows:
+           url_str = str(url).replace('(',  '').replace(')', '').replace(',', '').replace("'", '')
+           print( url_str, '\n')
+           wb.open_new_tab(url_str)
             
-            # do something with the image, e.g., save it to a file or display it
-            img.save("image_{}.jpg".format(row_id))
+        # convert each tuple in the list to a list
+        # for row in rows:
+        #     search_rslt.append({
+        #         'ImageFileName': row[0],
+        #         'Url': row[1],
+        #     })
+        # wb.open_new_tab(search_rslt['Url'])
+        
+        # search_rslt = [list[row] for row in rows]
+        
+        # Using a dictionary
+        # for row in rows:
+        #     search_rslt.append({
+        #         'id': row[0],
+        #         'OutfitType': row[1],
+        #         'Colour': row[2],
+        #         'Brand': row[3],
+        #         'Price': row[4],
+        #         'Description': row[5],
+        #         'Data': row[6],
+        #         'Url': row[7]
+        #     })
+        
+        
+        # for row in rows:
+        #     row_id = row[0]
+        #     row_image = row[1]
+        #     row_url = row[2]
+        #     img = Image.open(BytesIO(row_image))
+        #     save_img_url(img, row_url)
             
-            # show the image using Pillow's built-in image viewer
-            img.show()
+        #     # do something with the image, e.g., save it to a file or display it
+        #     img.save("TestImages/image_{}.jpg".format(row_id))
+            
+        #     # show the image using Pillow's built-in image viewer
+        #     img.show()
 
         
 

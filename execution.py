@@ -6,3 +6,4 @@ from createDB import *
 from prototyp import *
 
 create_DB()
+searchDB('Blue')
