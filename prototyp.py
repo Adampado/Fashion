@@ -118,7 +118,7 @@ def searchDB(colr=""):
            print( url_str, '\n')
            wb.open_new_tab(url_str)
            
-         # Using a dictionary
+         # Using a dictionary (didnt work)
          # for row in rows:
          #     search_rslt.append({
          #         'id': row[0],
