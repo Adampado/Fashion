@@ -4,7 +4,8 @@ Adam Njikam
 import os
 import urllib.request
 import sqlite3
-from PIL.ExifTags import TAGS
+# from PIL.ExifTags import TAGS
+
 from typing import List
 import webbrowser as wb
 # from PIL import Image
@@ -80,8 +81,8 @@ def save_img_url(img, url):
             # print(f"{tag}: {data}")
 
     # modify the description tag of the image
-    description = url
-    exifdata[TAGS["ImageDescription"]] = description
+    # description = url
+   #  exifdata[TAGS["ImageDescription"]] = description
            
     
 def print_List_len(size: List[int]):
